@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão de Preço de Imóveis</title>
+</head>
+<body>
+    <h1>Ferramenta de Previsão de Preço de Imóveis</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label for="host_name">Nome do host:</label>
+        <input type="text" id="host_name" name="host_name" maxlength="30" required><br><br>
+
+        <label for="host_listings_count">Número de imóveis sob propriedade do host:</label>
+        <input type="number" id="host_listings_count" name="host_listings_count" min="1" required><br><br>
+
+        <label for="latitude">Latitude:</label>
+        <input type="number" id="latitude" name="latitude" step="0.000001" min="-90" max="90" required><br><br>
+
+        <label for="longitude">Longitude:</label>
+        <input type="number" id="longitude" name="longitude" step="0.000001" min="-180" max="180" required><br><br>
+
+        <label for="accommodates">Número de hóspedes:</label>
+        <input type="number" id="accommodates" name="accommodates" min="1" required><br><br>
+
+        <label for="bathrooms">Número de banheiros:</label>
+        <input type="number" id="bathrooms" name="bathrooms" min="1" required><br><br>
+
+        <label for="bedrooms">Número de quartos:</label>
+        <input type="number" id="bedrooms" name="bedrooms" min="1" required><br><br>
+
+        <label for="beds">Número de camas:</label>
+        <input type="number" id="beds" name="beds" min="1" required><br><br>
+
+        <label for="extra_people">Número extra de pessoas:</label>
+        <input type="number" id="extra_people" name="extra_people" min="0" required><br><br>
+
+        <label for="minimum_nights">Número mínimo de noites:</label>
+        <input type="number" id="minimum_nights" name="minimum_nights" min="1" required><br><br>
+
+        <label for="n_amenities">Número de cômodos:</label>
+        <input type="number" id="n_amenities" name="n_amenities" min="1" required><br><br>
+
+        <label>Tipo de quarto: Casa/Apto inteiro</label><br>
+        <input type="radio" id="room_type_Entire_home_apt_yes" name="room_type_Entire_home_apt" value="1" required>
+        <label for="room_type_Entire_home_apt_yes">Sim</label>
+        <input type="radio" id="room_type_Entire_home_apt_no" name="room_type_Entire_home_apt" value="0">
+        <label for="room_type_Entire_home_apt_no">Não</label><br><br>
+
+        <label>O anfitrião é Superhost?</label><br>
+        <input type="radio" id="host_is_superhost_yes" name="host_is_superhost" value="1" required>
+        <label for="host_is_superhost_yes">Sim</label>
+        <input type="radio" id="host_is_superhost_no" name="host_is_superhost" value="0">
+        <label for="host_is_superhost_no">Não</label><br><br>
+
+        <label>Reserva instantânea disponível?</label><br>
+        <input type="radio" id="instant_bookable_yes" name="instant_bookable" value="1" required>
+        <label for="instant_bookable_yes">Sim</label>
+        <input type="radio" id="instant_bookable_no" name="instant_bookable" value="0">
+        <label for="instant_bookable_no">Não</label><br><br>
+
+        <label for="ano">Ano:</label>
+        <input type="number" id="ano" name="ano" min="2000" max="2100" required><br><br>
+
+        <label for="mes">Mês:</label>
+        <input type="number" id="mes" name="mes" min="1" max="12" required><br><br>
+
+        <label>Tipo de propriedade: Apartamento</label><br>
+        <input type="radio" id="property_type_Apartment_yes" name="property_type_Apartment" value="1" required>
+        <label for="property_type_Apartment_yes">Sim</label>
+        <input type="radio" id="property_type_Apartment_no" name="property_type_Apartment" value="0">
+        <label for="property_type_Apartment_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Bed and Breakfast</label><br>
+        <input type="radio" id="property_type_Bed_and_breakfast_yes" name="property_type_Bed_and_breakfast" value="1" required>
+        <label for="property_type_Bed_and_breakfast_yes">Sim</label>
+        <input type="radio" id="property_type_Bed_and_breakfast_no" name="property_type_Bed_and_breakfast" value="0">
+        <label for="property_type_Bed_and_breakfast_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Condomínio</label><br>
+        <input type="radio" id="property_type_Condominium_yes" name="property_type_Condominium" value="1" required>
+        <label for="property_type_Condominium_yes">Sim</label>
+        <input type="radio" id="property_type_Condominium_no" name="property_type_Condominium" value="0">
+        <label for="property_type_Condominium_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Casa</label><br>
+        <input type="radio" id="property_type_House_yes" name="property_type_House" value="1" required>
+        <label for="property_type_House_yes">Sim</label>
+        <input type="radio" id="property_type_House_no" name="property_type_House" value="0">
+        <label for="property_type_House_no">Não</label><br><br>
+
+        <label>Tipo de quarto: Quarto de hotel</label><br>
+        <input type="radio" id="room_type_Hotel_room_yes" name="room_type_Hotel_room" value="1" required>
+        <label for="room_type_Hotel_room_yes">Sim</label>
+        <input type="radio" id="room_type_Hotel_room_no" name="room_type_Hotel_room" value="0">
+        <label for="room_type_Hotel_room_no">Não</label><br><br>
+
+        <label>Tipo de quarto: Quarto privado</label><br>
+        <input type="radio" id="room_type_Private_room_yes" name="room_type_Private_room" value="1" required>
+        <label for="room_type_Private_room_yes">Sim</label>
+        <input type="radio" id="room_type_Private_room_no" name="room_type_Private_room" value="0">
+        <label for="room_type_Private_room_no">Não</label><br><br>
+
+        <label>Tipo de quarto: Quarto compartilhado</label><br>
+        <input type="radio" id="room_type_Shared_room_yes" name="room_type_Shared_room" value="1" required>
+        <label for="room_type_Shared_room_yes">Sim</label>
+        <input type="radio" id="room_type_Shared_room_no" name="room_type_Shared_room" value="0">
+        <label for="room_type_Shared_room_no">Não</label><br><br>
+
+
+        <label>Tipo de propriedade: Suite do hóspede</label><br>
+        <input type="radio" id="property_type_Guest_suite_yes" name="property_type_Guest_suite" value="1" required>
+        <label for="property_type_Guest_suite_yes">Sim</label>
+        <input type="radio" id="property_type_Guest_suite_no" name="property_type_Guest_suite" value="0">
+        <label for="property_type_Guest_suite_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Pousada</label><br>
+        <input type="radio" id="property_type_Guesthouse_yes" name="property_type_Guesthouse" value="1" required>
+        <label for="property_type_Guesthouse_yes">Sim</label>
+        <input type="radio" id="property_type_Guesthouse_no" name="property_type_Guesthouse" value="0">
+        <label for="property_type_Guesthouse_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Hostel</label><br>
+        <input type="radio" id="property_type_Hostel_yes" name="property_type_Hostel" value="1" required>
+        <label for="property_type_Hostel_yes">Sim</label>
+        <input type="radio" id="property_type_Hostel_no" name="property_type_Hostel" value="0">
+        <label for="property_type_Hostel_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Loft</label><br>
+        <input type="radio" id="property_type_Loft_yes" name="property_type_Loft" value="1" required>
+        <label for="property_type_Loft_yes">Sim</label>
+        <input type="radio" id="property_type_Loft_no" name="property_type_Loft" value="0">
+        <label for="property_type_Loft_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Outros</label><br>
+        <input type="radio" id="property_type_Outros_yes" name="property_type_Outros" value="1" required>
+        <label for="property_type_Outros_yes">Sim</label>
+        <input type="radio" id="property_type_Outros_no" name="property_type_Outros" value="0">
+        <label for="property_type_Outros_no">Não</label><br><br>
+
+        <label>Tipo de propriedade: Apartamento Servido</label><br>
+        <input type="radio" id="property_type_Serviced_apartment_yes" name="property_type_Serviced_apartment" value="1" required>
+        <label for="property_type_Serviced_apartment_yes">Sim</label>
+        <input type="radio" id="property_type_Serviced_apartment_no" name="property_type_Serviced_apartment" value="0">
+        <label for="property_type_Serviced_apartment_no">Não</label><br><br>
+
+        <label>Política de cancelamento: Flexível</label><br>
+        <input type="radio" id="cancellation_policy_flexible_yes" name="cancellation_policy_flexible" value="1" required>
+        <label for="cancellation_policy_flexible_yes">Sim</label>
+        <input type="radio" id="cancellation_policy_flexible_no" name="cancellation_policy_flexible" value="0">
+        <label for="cancellation_policy_flexible_no">Não</label><br><br>
+
+        <label>Política de cancelamento: Moderada</label><br>
+        <input type="radio" id="cancellation_policy_moderate_yes" name="cancellation_policy_moderate" value="1" required>
+        <label for="cancellation_policy_moderate_yes">Sim</label>
+        <input type="radio" id="cancellation_policy_moderate_no" name="cancellation_policy_moderate" value="0">
+        <label for="cancellation_policy_moderate_no">Não</label><br><br>
+
+        <label>Política de cancelamento: Estrita</label><br>
+        <input type="radio" id="cancellation_policy_strict_yes" name="cancellation_policy_strict" value="1" required>
+        <label for="cancellation_policy_strict_yes">Sim</label>
+        <input type="radio" id="cancellation_policy_strict_no" name="cancellation_policy_strict" value="0">
+        <label for="cancellation_policy_strict_no">Não</label><br><br>
+
+        <label>Política de cancelamento: Estrita (14 dias com período de carência)</label><br>
+        <input type="radio" id="cancellation_policy_strict_14_with_grace_period_yes" name="cancellation_policy_strict_14_with_grace_period" value="1" required>
+        <label for="cancellation_policy_strict_14_with_grace_period_yes">Sim</label>
+        <input type="radio" id="cancellation_policy_strict_14_with_grace_period_no" name="cancellation_policy_strict_14_with_grace_period" value="0">
+        <label for="cancellation_policy_strict_14_with_grace_period_no">Não</label><br><br>
+
+        <button type="submit">Prever valor</button>
+    </form>
+
+    {% if preco_estimado %}
+        <p>Preço estimado: {{ preco_estimado }}</p>
+    {% endif %}
+
+    {% if msg %}
+        <p>Dados: {{ msg }}</p>
+    {% endif %}
+
+</body>
+</html>
