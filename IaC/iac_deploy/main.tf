@@ -42,7 +42,7 @@ resource "aws_instance" "ml_api" {
   # Ensure that EC2 creation waits for RDS instance to be ready
   depends_on = [aws_s3_bucket.project_ml_bucket]
 
-  # Script de inicialização
+  # Startup script
   user_data = <<-EOF
                 #!/bin/bash
                 sudo yum update -y
