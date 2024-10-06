@@ -6,7 +6,7 @@ LABEL maintainer="PATRICK-VEROL"
 
 # Update system packages and install necessary dependencies
 RUN apt-get update && \
-    apt-get install -y wget unzip curl openssh-client iputils-ping
+    apt-get install -y wget unzip curl openssh-client iputils-ping postgresql-client
 
 # Set the Terraform version (adjust as necessary)
 ENV TERRAFORM_VERSION=1.6.5
